@@ -23,7 +23,7 @@ class DownloadControllerSpec extends Specification {
 
     def "404 when root doesn't exist"() {
         given:
-        config.fileserver.paths = PATHS
+        config.grails.plugins.fileserver.paths = PATHS
         params.root = "somepath"
         params.path = "some/file/to/download.txt"
 
@@ -39,7 +39,7 @@ class DownloadControllerSpec extends Specification {
         FileService fileServiceMock = Mock()
         controller.fileService = fileServiceMock
 
-        config.fileserver.paths = PATHS
+        config.grails.plugins.fileserver.paths = PATHS
         params.root = PATHS.entrySet().first().key
         params.path = "some/file/to/download.txt"
 
@@ -62,7 +62,7 @@ class DownloadControllerSpec extends Specification {
             }
         }
 
-        config.fileserver.paths = PATHS
+        config.grails.plugins.fileserver.paths = PATHS
         params.root = PATHS.entrySet().first().key
         params.path = "some/file/to/download.txt"
 
