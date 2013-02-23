@@ -8,18 +8,17 @@ class FileServerGrailsPlugin {
         "grails-app/views/error.gsp"
     ]
 
-    // TODO Fill in these fields
     def title = "File Server Plugin" // Headline display name of the plugin
     def author = "Piotr Dorobisz"
     def authorEmail = "pdorobisz@gmail.com"
     def description = '''\
-Adds controller that can serve files from any directory on disk. You can specify multiple "root" directories which contain
-files that should be served. In request you have to specify root directory you want to download file from and path to
-file (relative to root).
+This plugin provides controller that allows you to serve files from any directory on disk. You can specify multiple
+"root" directories which contain files that should be served. In request you have to specify root directory you want to
+get file from and path to file (relative to root).
 '''
 
     // URL to the plugin's documentation
-    def documentation = "http://grails.org/plugin/file-server"
+    def documentation = "https://github.com/pdorobisz/grails-file-server/wiki"
 
     // Extra (optional) plugin metadata
 
