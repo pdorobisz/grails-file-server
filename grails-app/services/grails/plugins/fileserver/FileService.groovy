@@ -4,9 +4,9 @@ import java.nio.file.Paths
 
 class FileService {
 
-    def transactional = false
+    static transactional = false
 
-    def loadFile(basePath, filePath) {
+    File loadFile(String basePath, String filePath) {
         def pathToBase = Paths.get(basePath).normalize()
         def pathToFile = Paths.get(basePath, filePath).normalize()
 
