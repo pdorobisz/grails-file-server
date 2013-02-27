@@ -11,7 +11,7 @@ get file from and path to file (relative to root).
 '''
 
     def documentation = "https://github.com/pdorobisz/grails-file-server/wiki"
-//    def license = "APACHE"
-//    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
-//    def scm = [ url: "http://svn.codehaus.org/grails-plugins/" ]
+    def license = "APACHE"
+    def issueManagement = [system: "GitHub", url: "https://github.com/pdorobisz/grails-file-server/issues"]
+    def scm = [url: "https://github.com/pdorobisz/grails-file-server"]
 }
