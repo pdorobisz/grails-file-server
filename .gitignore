@@ -3,3 +3,8 @@
 .project
 *.iml
 target
+plugin.xml
+*.log
+*.zip
+web-app
+.settings
