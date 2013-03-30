@@ -7,11 +7,23 @@ import spock.lang.Specification
 class DownloadControllerSpec extends Specification {
 
     private static final PATHS = ["path1": "dir1/subdir1", "path2": "dir2/subdir2"]
+    private static final CONTEXT = "/testcontext"
+    private static final String FILE_PATH = "some/file/to/download.txt"
+
+    private def setForwardURI(root, path){
+        request.forwardURI = "${request.contextPath}/${controller.controllerName}/${root}/${path}"
+    }
+
+    def setup(){
+        config.grails.plugins.fileserver.paths = PATHS
+        request.contextPath = CONTEXT
+    }
 
     def "404 when missing configuration"() {
         given:
-        params.root = "somepath"
-        params.path = "some/file/to/download.txt"
+        config.grails.plugins.fileserver.paths = null
+        params.root = PATHS.entrySet().first().key
+        setForwardURI(params.root, FILE_PATH)
 
         when:
         controller.index()
@@ -23,9 +35,8 @@ class DownloadControllerSpec extends Specification {
 
     def "404 when root doesn't exist"() {
         given:
-        config.grails.plugins.fileserver.paths = PATHS
-        params.root = "somepath"
-        params.path = "some/file/to/download.txt"
+        params.root = "wrongpath"
+        setForwardURI(params.root, FILE_PATH)
 
         when:
         controller.index()
@@ -38,10 +49,8 @@ class DownloadControllerSpec extends Specification {
         given:
         FileService fileServiceMock = Mock()
         controller.fileService = fileServiceMock
-
-        config.grails.plugins.fileserver.paths = PATHS
         params.root = PATHS.entrySet().first().key
-        params.path = "some/file/to/download.txt"
+        setForwardURI(params.root, FILE_PATH)
 
         when:
         controller.index()
@@ -62,9 +71,8 @@ class DownloadControllerSpec extends Specification {
             }
         }
 
-        config.grails.plugins.fileserver.paths = PATHS
         params.root = PATHS.entrySet().first().key
-        params.path = "some/file/to/download.txt"
+        setForwardURI(params.root, FILE_PATH)
 
         when:
         controller.index()
@@ -72,5 +80,19 @@ class DownloadControllerSpec extends Specification {
         then:
         1 * fileServiceMock.loadFile(_, _) >> fileToReturn
         response.contentAsByteArray == bytes
+    }
+
+    def "parse forwardURI"(){
+        given:
+        FileService fileServiceMock = Mock()
+        controller.fileService = fileServiceMock
+        params.root = PATHS.entrySet().first().key
+        setForwardURI(params.root, FILE_PATH)
+
+        when:
+        controller.index()
+
+        then:
+        1 * fileServiceMock.loadFile(PATHS.entrySet().first().value, FILE_PATH) >> null
     }
 }
