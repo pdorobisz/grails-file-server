@@ -1,4 +1,4 @@
-package grails.plugins.fileserver
+package org.grails.plugins.fileserver
 
 class DownloadController {
 
