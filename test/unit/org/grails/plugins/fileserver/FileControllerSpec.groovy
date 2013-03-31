@@ -3,8 +3,8 @@ package org.grails.plugins.fileserver
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 
-@TestFor(DownloadController)
-class DownloadControllerSpec extends Specification {
+@TestFor(FileController)
+class FileControllerSpec extends Specification {
 
     private static final PATHS = ["path1": "dir1/subdir1", "path2": "dir2/subdir2"]
     private static final CONTEXT = "/testcontext"

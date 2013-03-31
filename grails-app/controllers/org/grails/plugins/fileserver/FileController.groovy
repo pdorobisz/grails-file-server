@@ -1,6 +1,6 @@
 package org.grails.plugins.fileserver
 
-class DownloadController {
+class FileController {
 
     def fileService
 
