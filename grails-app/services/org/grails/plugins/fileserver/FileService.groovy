@@ -12,7 +12,7 @@ class FileService {
 
         if (pathToFile.startsWith(pathToBase)) {
             def file = pathToFile.toFile()
-            if (file.exists()) {
+            if (file.exists() && file.isFile()) {
                 return file
             }
         }

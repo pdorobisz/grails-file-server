@@ -33,4 +33,13 @@ class FileServiceSpec extends Specification {
         expect:
         service.loadFile(basePath, filePath).text == textFromFile
     }
+
+    def "return null when path to directory is given"(){
+        expect:
+        service.loadFile(basePath, filePath) == null
+
+        where:
+        basePath << ["test/integration/", "test/integration/resources/"]
+        filePath << ["resources/", ""]
+    }
 }
