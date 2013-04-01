@@ -11,7 +11,7 @@ class FileControllerSpec extends Specification {
     private static final String FILE_PATH = "some/file/to/download.txt"
 
     private def setForwardURI(root, path){
-        request.forwardURI = "${request.contextPath}/${controller.controllerName}/${root}/${path}"
+        request.forwardURI = "${request.contextPath}/controller/${root}/${path}"
     }
 
     def setup(){
@@ -23,6 +23,7 @@ class FileControllerSpec extends Specification {
         given:
         config.grails.plugins.fileserver.paths = null
         params.root = PATHS.entrySet().first().key
+        params.path = FILE_PATH
         setForwardURI(params.root, FILE_PATH)
 
         when:
@@ -36,6 +37,7 @@ class FileControllerSpec extends Specification {
     def "404 when root doesn't exist"() {
         given:
         params.root = "wrongpath"
+        params.path = FILE_PATH
         setForwardURI(params.root, FILE_PATH)
 
         when:
@@ -50,6 +52,7 @@ class FileControllerSpec extends Specification {
         FileService fileServiceMock = Mock()
         controller.fileService = fileServiceMock
         params.root = PATHS.entrySet().first().key
+        params.path = FILE_PATH
         setForwardURI(params.root, FILE_PATH)
 
         when:
@@ -72,13 +75,14 @@ class FileControllerSpec extends Specification {
         }
 
         params.root = PATHS.entrySet().first().key
+        params.path = FILE_PATH
         setForwardURI(params.root, FILE_PATH)
 
         when:
         controller.index()
 
         then:
-        1 * fileServiceMock.loadFile(_, _) >> fileToReturn
+        1 * fileServiceMock.loadFile(PATHS.entrySet().first().value, FILE_PATH) >> fileToReturn
         response.contentAsByteArray == bytes
     }
 
@@ -87,12 +91,16 @@ class FileControllerSpec extends Specification {
         FileService fileServiceMock = Mock()
         controller.fileService = fileServiceMock
         params.root = PATHS.entrySet().first().key
-        setForwardURI(params.root, FILE_PATH)
+        params.path = path
+        setForwardURI(params.root, path)
 
         when:
         controller.index()
 
         then:
-        1 * fileServiceMock.loadFile(PATHS.entrySet().first().value, FILE_PATH) >> null
+        1 * fileServiceMock.loadFile(PATHS.entrySet().first().value, path) >> null
+
+        where:
+        path << ["file", "file.txt", "dir/subdir/file", "dir/subdir/file.txt"]
     }
 }

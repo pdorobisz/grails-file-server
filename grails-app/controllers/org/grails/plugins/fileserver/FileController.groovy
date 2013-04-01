@@ -6,7 +6,7 @@ class FileController {
 
     def index() {
         def root = params.root
-        def path = getPath(request, root)
+        def path = getPath(request.forwardURI, params.path)
 
         def basePath = grailsApplication.config.grails?.plugins?.fileserver?.paths?.get(root)
         File file = basePath ? fileService.loadFile(basePath, path) : null
@@ -20,9 +20,9 @@ class FileController {
         }
     }
 
-    private String getPath(request, root){
-        String uri = request.forwardURI
-        String context = request.contextPath
-        return uri.replaceFirst("^${context}/${controllerName}/${root}/", '')
+    private String getPath(uri, path){
+        String last = uri.substring(uri.lastIndexOf('/') + 1)
+        String path2 = path.substring(0, path.lastIndexOf('/') + 1)
+        return path2 + last
     }
 }
