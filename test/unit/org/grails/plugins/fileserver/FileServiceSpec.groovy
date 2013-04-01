@@ -8,8 +8,8 @@ class FileServiceSpec extends Specification {
 
     def "return null when requested file outside base directory"() {
         given:
-        def basePath = "/path/to/some/dir"
-        def filePath = "dir2/../../file.txt"
+        def basePath = "test/integration/resources/dir"
+        def filePath = "../test.txt"
 
         expect:
         service.loadFile(basePath, filePath) == null
@@ -17,8 +17,8 @@ class FileServiceSpec extends Specification {
 
     def "return null when requested file doesn't exist"() {
         given:
-        def basePath = new File('test/').absolutePath
-        def filePath = "notExistingFile"
+        def basePath = "test/integration"
+        def filePath = "nonExistingFile"
 
         expect:
         service.loadFile(basePath, filePath) == null
@@ -26,7 +26,7 @@ class FileServiceSpec extends Specification {
 
     def "return existing file"() {
         given:
-        def basePath = new File('test/integration/resources/').absolutePath
+        def basePath = "test/integration/resources/"
         def filePath = "test.txt"
         def textFromFile = new File("$basePath/$filePath").text
 
