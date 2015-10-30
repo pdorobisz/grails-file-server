@@ -1,5 +1,5 @@
 class FileServerGrailsPlugin {
-    def version = "0.2"
+    def version = "0.2.1"
     def grailsVersion = "2.0 > *"
     def title = "File Server Plugin"
     def author = "Piotr Dorobisz"

@@ -2,6 +2,7 @@
 .idea
 .project
 *.iml
+out
 target
 plugin.xml
 *.log

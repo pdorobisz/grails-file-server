@@ -12,3 +12,5 @@ log4j = {
 }
 
 grails.plugins.fileserver.paths=["resources": "test/integration/resources/"]
+grails.views.default.codec="html"
+grails.views.gsp.encoding="UTF-8"
