@@ -13,9 +13,6 @@ class FileController {
 
         if (file) {
             log.debug("$root/$path, sending file: $file.absolutePath")
-            // inspired by answer of tim_yates of http://stackoverflow.com/a/15379941/1323837
-            // using this implementation, which does not load the file into memory
-            // important for big files and/or servers with very limited memory
             file.withInputStream {
                 response.outputStream << it
             }
