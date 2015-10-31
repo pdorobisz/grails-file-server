@@ -10,11 +10,11 @@ class FileControllerSpec extends Specification {
     private static final CONTEXT = "/testcontext"
     private static final String FILE_PATH = "some/file/to/download.txt"
 
-    private def setForwardURI(root, path){
+    private def setForwardURI(root, path) {
         request.forwardURI = "${request.contextPath}/controller/${root}/${path}"
     }
 
-    def setup(){
+    def setup() {
         config.grails.plugins.fileserver.paths = PATHS
         request.contextPath = CONTEXT
     }
@@ -32,7 +32,6 @@ class FileControllerSpec extends Specification {
         then:
         response.status == 404
     }
-
 
     def "404 when root doesn't exist"() {
         given:
@@ -68,11 +67,8 @@ class FileControllerSpec extends Specification {
         FileService fileServiceMock = Mock()
         controller.fileService = fileServiceMock
         def bytes = [65, 66, 67, 97, 98, 99] as byte[]
-        def fileToReturn = new File("") {
-            public byte[] getBytes() {
-                return bytes
-            }
-        }
+        File fileToReturn = Stub()
+        fileToReturn.metaClass.withInputStream = { Closure c -> bytes.with(c) }
 
         params.root = PATHS.entrySet().first().key
         params.path = FILE_PATH
@@ -86,7 +82,7 @@ class FileControllerSpec extends Specification {
         response.contentAsByteArray == bytes
     }
 
-    def "parse forwardURI"(){
+    def "parse forwardURI"() {
         given:
         FileService fileServiceMock = Mock()
         controller.fileService = fileServiceMock
