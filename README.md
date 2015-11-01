@@ -1,7 +1,17 @@
 grails-file-server
 ==================
 
-Grails plugin that allows you to serve files from any directory on disk.
+Grails 2.x plugin that allows you to serve files from any directory on disk.
+
+Add dependency to _grails-app/conf/BuildConfig.groovy_:
+
+    grails.project.dependency.resolution = {
+        ...
+        plugins {
+            ...
+            runtime ':file-server:0.2.1'
+        }
+    }
 
 Add _download_ controller provided by this plugin to _grails-app/conf/UrlMappings.groovy_:
 
